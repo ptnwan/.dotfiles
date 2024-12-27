@@ -1,4 +1,4 @@
-# Dotfiles
+# My custom dotfiles
 
 ## Dependecies
 
