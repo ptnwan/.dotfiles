@@ -1,6 +1,6 @@
 # Fedora WSL setup
 
-> :note: **Note:**
+> :memo: **Note:**
 > I would like to use Windows Powershell 7 in tandem with Windows Terminal but you could use Command Prompt for this.
 
 ## 1. Install WSL 2
