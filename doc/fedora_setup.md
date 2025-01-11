@@ -11,7 +11,7 @@ wsl --set-default-version 2
 ```
 The command will set the default version to WSL 2, or fail if you still on the WSL 1.
 
-## 2. Get a rootfs image of Fedora
+## 2. Get a `rootfs` image of Fedora
 
 ### 2.1 From Fedora Container base
 
@@ -23,7 +23,7 @@ The `rootfs` embedded in the [Fedora Container Base](https://koji.fedoraproject.
 4. Extract the content of `.tar` file, you would find a folder with a long hexadecimal name.
 5. A `layer.tar` file would locates within that folder. This would be the **rootfs**.
 
-## 2.2 From docker-brew-fedora project
+### 2.2 From docker-brew-fedora project
 
 Another source is the [docker-brew-fedora](https://github.com/fedora-cloud/docker-brew-fedora) project.
 
