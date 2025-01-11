@@ -5,6 +5,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+
+
+
+# -------------------- Zinit --------------------
+
 # Zinit and plugins directories
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
@@ -25,24 +30,37 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
-# Load complentions
+
+
+
+# -------------------- Completion --------------------
+
+# Load completions
 autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+
+# -------------------- Keybindings --------------------
 
 # Keybindings
 bindkey -v
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
+
+
+
+# -------------------- History --------------------
+
 # History
-HISTSIZE=1000
+HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
+
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space
@@ -51,13 +69,49 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# Path
-export PATH="$PATH:/opt/nvim-linux64/bin"
 
-# Aliases
+
+
+# -------------------- Path --------------------
+
+# Path
+setopt extended_glob null_glob
+
+path=(
+    $path
+    /opt/nvim-linux64/bin
+)
+
+typeset -U path
+path=($^path(N-/))
+
+export PATH
+
+
+
+
+# -------------------- Environment variables --------------------
+
+export EDITOR=nvim
+
+
+
+
+# -------------------- Aliases --------------------
+
+# Neovim
 alias vi=nvim
+
+# ls
 alias ls='ls --color'
 alias la='ls -a --color'
 alias lh='ls -lh --color'
-alias lha='ls -lha --color'
+alias lha='ls -lath --color'
 
+
+
+
+# -------------------- Powerlevel10k --------------------
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
