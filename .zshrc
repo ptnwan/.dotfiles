@@ -108,6 +108,8 @@ alias la='ls -a --color'
 alias lh='ls -lh --color'
 alias lha='ls -lath --color'
 
+alias start-sshd='eval "$(ssh-agent -s)"'
+
 
 
 
