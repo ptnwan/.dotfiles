@@ -12,6 +12,7 @@ To check if you are running WSL 2, try :
 wsl --set-default-version 2
 ```
 The command will set the default version to WSL 2, or fail if you still on the WSL 1.
+You might want to upgrade to the WSL 2 kernel with [WSL 2 Linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
 
 ## 2. Get a `rootfs` image of Fedora
 
