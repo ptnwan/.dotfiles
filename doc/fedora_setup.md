@@ -1,7 +1,8 @@
 # Fedora WSL setup
 
 > :memo: **Note:**
-> I would like to use Windows Powershell 7 in tandem with Windows Terminal but you could use Command Prompt for this.
+> I would like to use Powershell 7 rather than Windows Powershell or Command Promp in tandem 
+  with Windows Terminal. Further, a Nerd Font is recommend for better visuality
 
 ## 1. Install WSL 2
 
@@ -15,26 +16,33 @@ The command will set the default version to WSL 2, or fail if you still on the W
 
 ### 2.1 From Fedora Container base
 
-The `rootfs` embedded in the [Fedora Container Base](https://koji.fedoraproject.org/koji/packageinfo?packageID=26387) project. To get the rootfs, follow:
+The `rootfs` embedded in the [Fedora Container Base](https://koji.fedoraproject.org/koji/packageinfo?packageID=26387)
+project. To get the rootfs, follow:
 
 1. Pick the Fedora version that you want.
-2. Find the right `.xz` file corresponding to your platform (such as `x84_64`). The file would look like `Fedora-Container-Base-<version>.<platform>.tar.xz`.
-3. Unpack the `Fedora-Container-Base-*.tar.xz` file to get `.tar` file (you might try 7-zip for this).
+2. Find the right `.xz` file corresponding to your platform (such as `x84_64`). The file would
+   look like `Fedora-Container-Base-<version>.<platform>.tar.xz`.
+3. Unpack the `Fedora-Container-Base-*.tar.xz` file to get `.tar` file (you might try 7-zip
+   for this).
 4. Extract the content of `.tar` file, you would find a folder with a long hexadecimal name.
 5. A `layer.tar` file would locates within that folder. This would be the **rootfs**.
 
 ### 2.2 From docker-brew-fedora project
 
-Another source is the [docker-brew-fedora](https://github.com/fedora-cloud/docker-brew-fedora) project.
+Another source is the [docker-brew-fedora](https://github.com/fedora-cloud/docker-brew-fedora) 
+project.
 
 To download the `rootfs`:
 
-1. Select your desired Fedora version from the active branches. For example, for the Fedora 40, you should looking for branch `40`.
-2. You can find the `.tar` file inside the corresponding platform folder. This file would be your `rootfs`. If your find the `.tar.xz`, you might extract it the get the `.tar` file.
+1. Select your desired Fedora version from the active branches. For example, for the Fedora 40,
+   you should looking for branch `40`.
+2. You can find the `.tar` file inside the corresponding platform folder. This file would be
+   your `rootfs`. If your find the `.tar.xz`, you might extract it the get the `.tar` file.
 
 ## 3. Make a folder for your WSL distro
 
-First, let create a folder your WSL distro. I would like to use `wsl` in my home directory, so I would create a sub-folder inside `wsl` called `fedora`.
+First, let create a folder your WSL distro. I would like to use `wsl` in my home directory,
+so I would create a sub-folder inside `wsl` called `fedora`.
 ```powershell
 mkdir $HOME\wsl\fedora
 ```
@@ -46,7 +54,8 @@ replace `<path-to-your-directory>` with the path your desired directory.
 
 ## 4. Install a new WSL Fedora distro
 
-In Powershell, assume that you name the distro "fedora", the installing folder is `$HOME\wsl\fedora` and the `rootfs` file named `fedora-rootfs.tar` is in Downloads, then:
+In Powershell, assume that you name the distro "fedora", the installing folder is 
+`$HOME\wsl\fedora` and the `rootfs` file named `fedora-rootfs.tar` is in Downloads, then:
 ```powershell
 wsl --import fedora $HOME\wsl\fedora $HOME\Downloads\fedora-rootfs.tar
 ```
@@ -64,7 +73,8 @@ wsl -l
 
 ## 6. Laucnh Fedora as `root`
 
-As default, when you run Fedora for the first time, you would be sign in as root. To run Fedora, try:
+As default, when you run Fedora for the first time, you would be sign in as root.
+To run Fedora, try:
 ```powershell
 wsl -d fedora
 ```
@@ -114,9 +124,12 @@ dnf upgrade
 
 ## 8. Missing the `mount command`
 
-If at the entry to your new Fedora, you are greeted with `An error occurred mounting one of your file systems`, then you are missing 'util-linux' package which contain `mount` and other essential commands.
+If at the entry to your new Fedora, you are greeted with `An error occurred mounting one of your
+file systems`, then you are missing 'util-linux' package which contain `mount` and other
+essential commands.
 
-If your need to mount, then install `util-linu` (or if you want minimal system, just install `util-linux-core`)
+If your need to mount, then install `util-linu` (or if you want minimal system, just install the
+`util-linux-core`)
 ```powershell
 dnf install -y util-linux
 ```
@@ -130,7 +143,8 @@ wsl -t fedora
 
 `root` user should never be the default user so let's create a normal user.
 
-We would need `passwd` and `cracklib-dicts` for password checking so you have to install both after you launched Fedora.
+We would need `passwd` and `cracklib-dicts` for password checking so you have to install both after
+you launched Fedora.
 ```powershell
 dnf install -y passwd cracklib-dicts
 ```
@@ -332,11 +346,11 @@ EOF
 ```
 
 Exit WSL and then login into WSL again, the powerlevel10k installing process should be
-displayed and the the ternimal should have some color.
+displayed and the ternimal should have some color.
 
 A Promt will appear to set up the Powerlelvel10k, configure it to what you prefer. If
-you chose to display in 2 lines, make sure to select the sparse spacing and enable
-transient promt.
+you chose to display in 2 lines, it is recommend to select the sparse spacing and enable
+transient promt for better visuality.
 
 If you want to run the Powerlevel10k configuration promt again, you might run:
 ```
