@@ -391,5 +391,5 @@ sudo dnf install -y make verilator ghc-zlib-devel gtkwave
 > 2. Move the `surfer_win` folder into the `Program Files` folder
 > 3. Make a link from the executable to `surfer` command in `/usr/bin`
 > ```
-> ln -s /mnt/c/Program Files/surfer_win/surfer.exe /usr/bin/surfer
+> ln -s /mnt/c/Program\ Files/surfer_win/surfer.exe /usr/bin/surfer
 > ```
