@@ -137,7 +137,7 @@ dnf install -y passwd cracklib-dicts
 
 Now, create a new user, add them to the `wheel` group so that the user can use `sudo`:
 ```powershell
-useradd -G whell <username>
+useradd -G wheel <username>
 ```
 replace `<username>` with your user name.
 
@@ -179,3 +179,182 @@ wsl -d fedora
 ```
 
 Basically, you are done installing new Fedora and it is ready to use.
+
+## 11. Fine tuning
+
+Reinstall shadow-utils
+```
+sudo dnf reinstall -y shadow-utils
+```
+Install packages to be able to ping servers
+```
+sudo dnf install -y procps-ng iputils
+sudo sysctl -w net.ipv4.ping_group_range="0 2000"
+```
+Install some commands may missing from the rootfs
+```
+sudo dnf -y install iproute findutils ncurses
+```
+
+Install man pages
+```
+grep -v nodocs /etc/dnf/dnf.conf | sudo tee /etc/dnf/dnf.conf
+sudo dnf install -y man man-pages
+```
+
+## 12. Others
+
+### 12.1 Git
+```
+sudo dnf install -y git
+```
+
+### 12.2 Zsh
+
+#### 12.2.1 Step 1
+
+Install Z shell
+```
+sudo dnf install -y zsh
+```
+#### 12.2.2 Step 2
+
+Check excutable paths in `/etc/shells`:
+```
+cat /etc/shells
+```
+One of these executables is your current shell. Check the current running shell:
+```
+echo $SHELL
+```
+
+You can skip to next step if you find zsh excutable path is already include in `/etc/shells`.
+Otherwise, you have to append the zsh excutable path into `/etc/shells`:
+```
+command -v zsh | sudo tee -a /etc/shells
+```
+check `/etc/shells` again if the zsh executable path has been included.
+
+#### 12.2.3 Step 3
+
+hange the Zsh to be the default login shell with 2 following option
+
+##### Option 1
+
+Use command `chsh` or "change shell" to set Zsh to be default
+```
+sudo chsh -s $(which zsh) $USER
+```
+
+##### Option 2
+```
+grep $USER /etc/passwd
+sudo usermod --shell /usr/bin/zsh $USER
+grep $USER /etc/passwd
+```
+
+#### 12.2.4 Step 4
+
+Add script to install `zinit` into `$HOME/.zshrc` file
+```
+cat << 'EOF' >> $HOME/.zshrc
+# Zinit and plugins directories
+# -----------------------------
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+# Download Zinit if it's not existed
+if [ ! -d "$ZINIT_HOME" ]; then
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+EOF
+```
+
+Then exit WSL and login again
+
+#### 12.2.5 Step 5
+
+Install Powerlevel10k, completion and some option for Zsh
+```
+cat << 'EOF' >> $HOME/.zshrc
+# Powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+# Zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+
+# Load completions
+# ----------------
+autoload -U compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Keybindings
+# -----------
+bindkey -v
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
+# History
+# -------
+HISTSIZE=10000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# Path
+# ----
+setopt extended_glob null_glob
+
+path=(
+    $path
+)
+
+typeset -U path
+path=($^path(N-/))
+
+export PATH
+
+EOF
+```
+
+Exit WSL and then login into WSL again, the powerlevel10k installing process should be
+displayed and the the ternimal should have some color.
+
+A Promt will appear to set up the Powerlelvel10k, configure it to what you prefer. If
+you chose to display in 2 lines, make sure to select the sparse spacing and enable
+transient promt.
+
+If you want to run the Powerlevel10k configuration promt again, you might run:
+```
+p10k configure
+```
+
+### Text editor
+
+I chose Neovim (a folk of Vim) as my text editor. To install Neovim, run:
+```
+sudo dnf install -y neovim
+```
+you might want to set `v` or `vi` as alias of `nvim` for convenient with:
+```
+cat << `EOF` >> $HOME/.zshrc
+# Variables
+# ---------
+
+# Neovim
+alias vi=nvim
+```
