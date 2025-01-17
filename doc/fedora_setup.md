@@ -385,7 +385,7 @@ sudo dnf install -y make verilator ghc-zlib-devel gtkwave
 > :memo: **NOTE** (Optional) 
 >
 > Beside `gtkwave` we could use `surfer` to view the waveform. If you wanna install,
-  consider the follow step
+  consider the following steps
 > 1. Download surfer from [here](https://gitlab.com/api/v4/projects/42073614/jobs/artifacts/main/raw/surfer_win.zip?job=windows_build)
      and extract it to folder name `surfer_win` and the folder should include `surfer.exe`
      executable
