@@ -373,3 +373,23 @@ cat << `EOF` >> $HOME/.zshrc
 # Neovim
 alias vi=nvim
 ```
+
+## For AQUA-24 teams
+
+Install `make`, `verilator` and `gtkwave`
+```
+sudo dnf install -y make verilator ghc-zlib-devel gtkwave
+```
+
+> :memo: **NOTE** (Optional) 
+>
+> Beside `gtkwave` we could use `surfer` to view the waveform. If you wanna install,
+  consider the follow step
+> 1. Download surfer from [here](https://gitlab.com/api/v4/projects/42073614/jobs/artifacts/main/raw/surfer_win.zip?job=windows_build)
+     and extract it to folder name `surfer_win` and the folder should include `surfer.exe`
+     executable
+> 2. Move the `surfer_win` folder into the `Program Files` folder
+> 3. Make a link from the executable to `surfer` command in `/usr/bin`
+> ```
+> ln -s /mnt/c/Program Files/surfer_win/surfer.exe /usr/bin/surfer
+> ```
