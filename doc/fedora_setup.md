@@ -1,6 +1,7 @@
 # Fedora WSL setup
 
 > :memo: **Note:**
+>
 > I would like to use Powershell 7 rather than Windows Powershell or Command Promp in tandem 
   with Windows Terminal. Further, a Nerd Font is recommend for better visuality
 
@@ -363,7 +364,7 @@ I chose Neovim (a folk of Vim) as my text editor. To install Neovim, run:
 ```
 sudo dnf install -y neovim
 ```
-you might want to set `v` or `vi` as alias of `nvim` for convenient with:
+you might want to set `v` or `vi` as alias of `nvim` for convenient:
 ```
 cat << `EOF` >> $HOME/.zshrc
 # Variables
